@@ -1,0 +1,26 @@
+@import "public";
+// mixin等内容请在 public.less 里面书写
+@import './base.less';
+
+// 文本居中
+.@{prefix}-text-center {
+  text-align: center;
+}
+
+// 清除浮动
+.@{prefix}-clearfix:before,
+.@{prefix}-clearfix:after {
+  display: table;
+  content: "";
+}
+.@{prefix}-clearfix:after {
+  clear: both
+}
+
+// 浮动相关
+.@{prefix}-fl {
+  float: left;
+}
+.@{prefix}-fr {
+  float: right;
+}
