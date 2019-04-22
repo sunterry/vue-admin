@@ -2,7 +2,9 @@ import Vue from 'vue';
 import App from './App.vue';
 import router from './router';
 import store from './store';
+import dtAdmin from '@/plugins';
 
+Vue.use(dtAdmin);
 Vue.config.productionTip = false;
 
 new Vue({
