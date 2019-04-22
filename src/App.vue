@@ -5,16 +5,14 @@
 </template>
 
 <script lang="ts">
-import { Vue, Component } from 'vue-property-decorator';
 import zh_CN from 'ant-design-vue/lib/locale-provider/zh_CN';
-import { LocaleProvider } from 'ant-design-vue';
 
-@Component({
+export default {
   name: 'App',
-})
-class App extends Vue {
-  public zhCN: LocaleProvider = zh_CN;
-}
-
-export default App;
+  data() {
+    return {
+      zhCN: zh_CN,
+    };
+  },
+};
 </script>
