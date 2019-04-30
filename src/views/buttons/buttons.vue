@@ -1,18 +1,18 @@
 <template>
-  <div>button</div>
+  <div>buttons</div>
 </template>
 
 <script>
 import { Vue, Component } from 'vue-property-decorator';
 
 @Component({
-  name: 'button',
+  name: 'buttons',
 })
-class Button extends Vue {
+class Buttons extends Vue {
   //
 }
 
-export default Button;
+export default Buttons;
 </script>
 
 <style lang="less" scoped>

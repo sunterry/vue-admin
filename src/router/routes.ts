@@ -1,79 +1,81 @@
 import { RouteConfig } from 'vue-router';
-import { IRouteItem } from '@/interface/router/routeTypes';
+import Layout from '../layout';
+import demo from './modules/demo';
 
-import Home from '../views/Home.vue';
+const auth = { auth: true };
 
-export const staticRoutes: IRouteItem[] & RouteConfig[] = [
+// 主框架内
+const frameIn: RouteConfig[] = [
   {
     path: '/',
-    name: '_index',
-    redirect: { name: 'home' },
-    component: () => import(/* webpackChunkName: "home" */ '../views/home/home.vue'),
-    meta: {
-      title: 'layout布局页面',
-    },
+    redirect: { name: 'index' },
+    component: Layout,
+    children: [
+      {
+        path: 'index',
+        name: 'index',
+        component: () => import(/* webpackChunkName: 'index' */ '@/views/index/index.vue'),
+      },
+      {
+        path: 'refresh',
+        name: 'refresh',
+        meta: {
+          hidden: true,
+        },
+        component: {
+          beforeRouteEnter(to, from, next) {
+            next((vm) => vm.$router.replace(from.fullPath));
+          },
+          render: (h) => h(),
+        },
+      },
+      {
+        path: 'redirect/:route*',
+        name: 'redirect',
+        meta: {
+          hidden: true,
+        },
+        component: {
+          beforeRouteEnter(to, from, next) {
+            next((vm) => vm.$router.replace(JSON.parse(from.params.route)));
+          },
+          render: (h) => h(),
+        },
+      },
+    ],
   },
+  demo,
+];
+
+// 主框架外
+const frameOut: RouteConfig[] = [
   {
     path: '/login',
     name: 'login',
-    meta: {
-      title: '登录',
-    },
-    component: () => import(/* webpackChunkName: "login" */ '../views/login/login'),
+    component: () => import(/* webpackChunkName: 'login' */'@/views/login/login'),
   },
+];
+
+// 页面错误路由列表
+const errorPage: RouteConfig[] = [
   {
     path: '/error401',
     name: 'error401',
-    meta: {
-      title: '页面无权限',
-    },
     component: () => import(/* webpackChunkName: "error401" */ '../views/error/error401.vue'),
   },
   {
     path: '*',
     name: 'error404',
-    meta: {
-      title: '页面中找不到',
-    },
     component: () => import(/* webpackChunkName: "error404" */ '../views/error/error404.vue'),
   },
 ];
 
-export const dynamicRoutes: IRouteItem[] & RouteConfig[] = [
-  {
-    path: '/home',
-    name: 'home',
-    component: () => import(/* webpackChunkName: 'home' */ '../layout/index'),
-    meta: {
-      title: '首页',
-    },
-  },
-  {
-    path: '/about',
-    name: 'about',
-    meta: {
-      title: '页面中找不到',
-    },
-    component: () => import(/* webpackChunkName: "about" */ '../views/about/about.vue'),
-  },
-  {
-    path: '/components',
-    name: 'components',
-    meta: {
-      title: '组件',
-    },
-    children: [
-      {
-        path: 'button',
-        name: 'button',
-        meta: {
-          title: '按钮',
-        },
-        component: () => import(/* webpackChunkName: 'button' */ '../views/button/button.vue'),
-      },
-    ],
-  },
+// 侧边栏菜单路由列表
+export const menuRoutesList = frameIn;
+
+// 所有路由
+export default [
+  ...frameIn,
+  ...frameOut,
+  ...errorPage,
 ];
-
-export const routes: RouteConfig[] = [...dynamicRoutes, ...staticRoutes];
-

@@ -7,8 +7,9 @@ export interface IRouteItem {
   meta: {
     title: string;
     hidden?: boolean;
-    permission?: string | string[] | boolean;
+    permission?: string[];
     icon?: string;
+    href?: string;
     [key: string]: any;
   };
 }

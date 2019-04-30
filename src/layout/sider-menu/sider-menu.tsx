@@ -1,27 +1,92 @@
-import { Vue, Component } from 'vue-property-decorator';
+import { Vue, Component, Prop, Watch } from 'vue-property-decorator';
+import { getCurrentRoute } from '@/libs/utils';
 import BScroll from 'better-scroll';
+import { Route, Location } from 'vue-router';
+import { IRouteItem } from '@/interface/router/routeTypes';
 
 @Component({
   name: 'sider-menu',
 })
 class SiderMenu extends Vue {
+  @Prop() private menuList!: IRouteItem[];
+  @Prop({ default: 'dark' }) private theme!: 'light' | 'dark';
   private BS: BScroll | undefined;
+  private selectedKeys: string[] = [];
+  private openKeys: string[] = [];
+  private fullPathMenuData: IRouteItem[] = [];
 
-  // public BS: BScroll = new BScroll(this.$el);
+  protected render() {
+    return (
+      <div class="web-menu">
+        <a-menu
+          v-model={this.selectedKeys}
+          theme={this.theme}
+          mode="inline"
+          on-click={this.handleSelect}
+          on-openChange={this.openChange}
+          openKeys={this.openKeys}
+        >
+          {this.renderMenu(this.fullPathMenuData)}
+        </a-menu>
+      </div>
+    );
+  }
 
-  public initScroll() {
-    this.BS = new BScroll(this.$el, {
-      mouseWheel: true,
-      click: true,
-      // 如果你愿意可以打开显示滚动条
-      // scrollbar: {
-      //   fade: true,
-      //   interactive: false
-      // }
+  private mounted() {
+    this.initScroll();
+  }
+
+  private beforeDestroy() {
+    this.scrollDestory();
+  }
+
+  private renderMenu(menuList: IRouteItem[]) {
+    return menuList.map((item: IRouteItem) => {
+      if (item.children) {
+        return (
+          <a-sub-menu key={item.path}>
+            <span slot="title">
+              {item.meta && item.meta.icon && <a-icon type={item.meta.icon} />}
+              <span>{item.meta && item.meta.title}</span>
+            </span>
+            {this.renderMenu(item.children)}
+          </a-sub-menu>
+        );
+      }
+      return (
+        <a-menu-item key={item.path}>
+          {item.meta && item.meta.icon && <a-icon type={item.meta.icon} />}
+          {item.meta && item.meta.title}
+        </a-menu-item>
+      );
     });
   }
 
-  public scrollDestory() {
+  @Watch('$route', { immediate: true, deep: true })
+  private routerUpdate(to: Route, from: Location) {
+    this.selectedKeys = getCurrentRoute(to.path).pathList;
+    const openKeys = [...this.selectedKeys];
+    openKeys.pop();
+    this.openKeys = openKeys || [];
+  }
+
+  private initScroll() {
+    this.BS = new BScroll(this.$el, {
+      mouseWheel: {
+        speed: 20,
+        invert: false,
+        easeTime: 300,
+      },
+      click: true,
+      scrollbar: {
+        fade: true,
+        // @ts-ignore @types/better-scroll interactive No support added
+        interactive: false,
+      },
+    });
+  }
+
+  private scrollDestory() {
     try {
       (this.BS as BScroll).destroy();
     } catch (e) {
@@ -30,54 +95,14 @@ class SiderMenu extends Vue {
     }
   }
 
-  public mounted() {
-    console.log(111);
-    this.initScroll();
+  private openChange(openKeys: string[]) {
+    this.openKeys = openKeys;
   }
 
-  public beforeDestroy() {
-    this.scrollDestory();
-  }
-
-  protected render() {
-    return (
-      <div class="web-menu">
-        <a-menu theme="dark" mode="inline">
-          <a-menu-item key="1">
-            <a-icon type="user"/>
-            <span className="nav-text">nav 1</span>
-          </a-menu-item>
-          <a-menu-item key="2">
-            <a-icon type="video-camera"/>
-            <span className="nav-text">nav 2</span>
-          </a-menu-item>
-          <a-menu-item key="3">
-            <a-icon type="upload"/>
-            <span className="nav-text">nav 3</span>
-          </a-menu-item>
-          <a-menu-item key="4">
-            <a-icon type="bar-chart"/>
-            <span className="nav-text">nav 4</span>
-          </a-menu-item>
-          <a-menu-item key="5">
-            <a-icon type="cloud-o"/>
-            <span className="nav-text">nav 5</span>
-          </a-menu-item>
-          <a-menu-item key="6">
-            <a-icon type="appstore-o"/>
-            <span className="nav-text">nav 6</span>
-          </a-menu-item>
-          <a-menu-item key="7">
-            <a-icon type="team"/>
-            <span className="nav-text">nav 7</span>
-          </a-menu-item>
-          <a-menu-item key="8">
-            <a-icon type="shop"/>
-            <span className="nav-text">nav 8</span>
-          </a-menu-item>
-        </a-menu>
-      </div>
-    )
+  private handleSelect(data: { item: Vue; key: string; keyPath: string[] }) {
+    const keyPath = data.keyPath.reverse();
+    const path = keyPath.join('/');
+    this.$router.push({ path });
   }
 }
 export default SiderMenu;
