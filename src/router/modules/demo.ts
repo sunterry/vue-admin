@@ -5,7 +5,7 @@ import Layout from '@/layout';
 const demo: RouteConfig & IRouteItem = {
   path: '/demo',
   name: 'demo',
-  redirect: { name: 'page-1' },
+  redirect: { name: 'Page1' },
   component: Layout,
   children: [
     {
