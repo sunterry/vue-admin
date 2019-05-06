@@ -1,12 +1,10 @@
 import { Vue, Component } from 'vue-property-decorator';
-import { State, Getter, Action, Mutation, namespace } from 'vuex-class';
-import SiderMenu from './sider-menu';
+import SiderMenu from './aside-menu';
 import LayoutFooter from './layout-footer';
 import config from '@/config';
+import menuList from '@/router/config/menu/aside';
 import '@/assets/styles/layout.less';
-import { IRouteItem } from '@/interface/router/routeTypes';
 
-const routeModule = namespace('routers');
 @Component({
   name: 'Layout',
   components: {
@@ -16,8 +14,7 @@ const routeModule = namespace('routers');
 })
 class Dashboard extends Vue {
   public BS = null;
-  @routeModule.Action private concatRoute!: (rules: string | boolean | string[]) => Promise<IRouteItem[]>;
-  @routeModule.Getter private menuRoutes!: IRouteItem[];
+  public menuRoutes = menuList;
   protected render() {
     return (
       <a-layout class="web-layout">

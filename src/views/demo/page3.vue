@@ -6,7 +6,7 @@
 
 <script>
 export default {
-  name: 'page3',
+  name: 'Page3',
 };
 </script>
 

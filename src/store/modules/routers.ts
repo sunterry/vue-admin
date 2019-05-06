@@ -1,7 +1,7 @@
 import { Commit, ActionTree, MutationTree, Module } from 'vuex';
 import { menuRoutesList } from '@/router/routes';
-import { IRouteItem } from '@/interface/router/routeTypes';
-import { getPermissionRoutes } from '@/libs/utils';
+import { IRouteItem } from '@/interface/routes';
+// import { getPermissionRoutes } from '@/libs/utils';
 import router from '@/router';
 import { APPROUTER } from '../types';
 

@@ -1,21 +1,22 @@
 import { Vue, Component, Prop, Watch } from 'vue-property-decorator';
 import { getCurrentRoute } from '@/libs/utils';
 import BScroll from 'better-scroll';
-import { Route, Location } from 'vue-router';
-import { IRouteItem } from '@/interface/router/routeTypes';
+import { Route } from 'vue-router';
+import { IRouteItem } from '@/interface/routes';
+import menuList from '@/router/config/menu/aside';
 
 @Component({
-  name: 'sider-menu',
+  name: 'Aside',
 })
-class SiderMenu extends Vue {
-  @Prop() private menuList!: IRouteItem[];
+class Aside extends Vue {
+  @Prop({ default: menuList }) private menuList!: IRouteItem[];
   @Prop({ default: 'dark' }) private theme!: 'light' | 'dark';
   private BS: BScroll | undefined;
   private selectedKeys: string[] = [];
   private openKeys: string[] = [];
-  private fullPathMenuData: IRouteItem[] = [];
 
   protected render() {
+    console.log(this.menuList);
     return (
       <div class="web-menu">
         <a-menu
@@ -26,7 +27,7 @@ class SiderMenu extends Vue {
           on-openChange={this.openChange}
           openKeys={this.openKeys}
         >
-          {this.renderMenu(this.fullPathMenuData)}
+          {this.renderMenu(this.menuList)}
         </a-menu>
       </div>
     );
@@ -63,7 +64,7 @@ class SiderMenu extends Vue {
   }
 
   @Watch('$route', { immediate: true, deep: true })
-  private routerUpdate(to: Route, from: Location) {
+  private routerUpdate(to: Route) {
     this.selectedKeys = getCurrentRoute(to.path).pathList;
     const openKeys = [...this.selectedKeys];
     openKeys.pop();
@@ -105,4 +106,4 @@ class SiderMenu extends Vue {
     this.$router.push({ path });
   }
 }
-export default SiderMenu;
+export default Aside;

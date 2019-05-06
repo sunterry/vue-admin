@@ -1,6 +1,6 @@
 import { Commit, MutationTree, Module } from 'vuex';
 import log from '@/libs/log';
-import { Direction } from '@/interface/public/enum';
+import { Direction } from '@/interface/enum';
 import config from '@/config';
 
 interface IReleases {

@@ -1,4 +1,4 @@
-import {Direction} from '@/interface/public/enum';
+import {Direction} from '@/interface/enum';
 
 class Log {
   public capsule(title: string, info: string, type: Direction = Direction.primary): void {

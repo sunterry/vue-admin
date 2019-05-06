@@ -1,5 +1,5 @@
 import _ from 'lodash';
-import { IRouteItem } from '@/interface/router/routeTypes';
+import { IRouteItem } from '@/interface/routes';
 
 /**
  * @description 获取当前路由
@@ -24,20 +24,21 @@ export const getCurrentRoute = (path?: string): { pathList: string[], params: st
     params,
   };
 };
+/*
 
-/**
+/!**
  * @description 判断是有权限
  * @param target string[]
  * @param arr string[]
- */
+ *!/
 export const hasOneOf = (target: string[], arr: string[]) => target.some((item) => arr.indexOf(item) > -1);
 
-/**
+/!**
  * @description 获取权限路由
  * @param data IRouteItem[]
  * @param rules string[] | string | boolean
  * @return IRouteItem[]
- */
+ *!/
 export const getPermissionRoutes = (data: IRouteItem[], rules: string[] | string | boolean): IRouteItem[] => {
   if (typeof rules === 'boolean') {
     return rules ? data : [];
@@ -69,11 +70,11 @@ export const getPermissionRoutes = (data: IRouteItem[], rules: string[] | string
   }
 };
 
-/**
+/!**
  * @description 格式化路径地址
  * @param data IRouteItem[]
  * @param parentPath string
- */
+ *!/
 export function formatMenuPath(data: IRouteItem[], parentPath: string = ''): IRouteItem[] {
   return _.map(data, (item: IRouteItem) => {
     const result = {
@@ -85,3 +86,4 @@ export function formatMenuPath(data: IRouteItem[], parentPath: string = ''): IRo
     return result;
   });
 }
+*/

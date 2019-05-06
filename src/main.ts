@@ -2,10 +2,10 @@ import Vue from 'vue';
 import App from './App';
 import router from './router';
 import store from './store';
-import dtAdmin from '@/plugins';
+import webAdmin from '@/plugins';
 import { authLogin } from '@/api/user';
 
-Vue.use(dtAdmin);
+Vue.use(webAdmin);
 Vue.config.productionTip = false;
 
 new Vue({
