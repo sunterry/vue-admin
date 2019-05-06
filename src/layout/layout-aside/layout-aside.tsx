@@ -8,7 +8,7 @@ import menuList from '@/router/config/menu/aside';
 @Component({
   name: 'Aside',
 })
-class Aside extends Vue {
+class LayoutAside extends Vue {
   @Prop({ default: menuList }) private menuList!: IRouteItem[];
   @Prop({ default: false }) private collapsed!: boolean;
   @Prop({ default: 'dark' }) private theme!: 'light' | 'dark';
@@ -105,4 +105,4 @@ class Aside extends Vue {
     this.$router.push({ path });
   }
 }
-export default Aside;
+export default LayoutAside;

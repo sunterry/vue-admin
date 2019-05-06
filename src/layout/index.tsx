@@ -1,5 +1,5 @@
 import { Vue, Component } from 'vue-property-decorator';
-import SiderMenu from './aside-menu';
+import LayoutAside from './layout-aside';
 import LayoutHeader from './layout-header';
 import LayoutFooter from './layout-footer';
 import config from '@/config';
@@ -11,7 +11,7 @@ import { IRouteItem } from '@/interface/routes';
   name: 'Layout',
   components: {
     LayoutHeader,
-    SiderMenu,
+    LayoutAside,
     LayoutFooter,
   },
 })
@@ -31,9 +31,10 @@ class Dashboard extends Vue {
             trigger={ null }
             collapsible
             collapsed={ this.collapsed }
+            width="220"
             theme="dark"
             class="web-sider">
-            <sider-menu
+            <layout-aside
               collapsed={ this.collapsed }
               menuList={this.menuRoutes}
             />
