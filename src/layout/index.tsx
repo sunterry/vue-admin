@@ -1,30 +1,44 @@
 import { Vue, Component } from 'vue-property-decorator';
 import SiderMenu from './aside-menu';
+import LayoutHeader from './layout-header';
 import LayoutFooter from './layout-footer';
 import config from '@/config';
 import menuList from '@/router/config/menu/aside';
 import '@/assets/styles/layout.less';
+import { IRouteItem } from '@/interface/routes';
 
 @Component({
   name: 'Layout',
   components: {
+    LayoutHeader,
     SiderMenu,
     LayoutFooter,
   },
 })
 class Dashboard extends Vue {
   public BS = null;
-  public menuRoutes = menuList;
+  public menuRoutes: IRouteItem[] = menuList;
+  public collapsed: boolean = false;
   protected render() {
     return (
       <a-layout class="web-layout">
-        <a-layout-header>Header</a-layout-header>
+        <layout-header
+          collapsed={ this.collapsed }
+          onToggleCollapse = { this.toggleCollapse }
+        />
         <a-layout>
-          <a-layout-sider width="240" theme="dark" class="web-sider">
-            <sider-menu menuList={this.menuRoutes} />
+          <a-layout-sider
+            trigger={ null }
+            collapsible
+            collapsed={ this.collapsed }
+            theme="dark"
+            class="web-sider">
+            <sider-menu
+              collapsed={ this.collapsed }
+              menuList={this.menuRoutes}
+            />
           </a-layout-sider>
           <a-layout-content>
-            layout布局
             <keep-alive>
               <router-view />
             </keep-alive>
@@ -33,6 +47,10 @@ class Dashboard extends Vue {
         <layout-footer message={config.footerMessage} />
       </a-layout>
     );
+  }
+  protected toggleCollapse(val: boolean) {
+    console.log(val);
+    this.collapsed = val;
   }
 }
 

@@ -10,26 +10,25 @@ import menuList from '@/router/config/menu/aside';
 })
 class Aside extends Vue {
   @Prop({ default: menuList }) private menuList!: IRouteItem[];
+  @Prop({ default: false }) private collapsed!: boolean;
   @Prop({ default: 'dark' }) private theme!: 'light' | 'dark';
   private BS: BScroll | undefined;
   private selectedKeys: string[] = [];
   private openKeys: string[] = [];
 
   protected render() {
-    console.log(this.menuList);
     return (
-      <div class="web-menu">
-        <a-menu
-          v-model={this.selectedKeys}
-          theme={this.theme}
-          mode="inline"
-          on-click={this.handleSelect}
-          on-openChange={this.openChange}
-          openKeys={this.openKeys}
-        >
-          {this.renderMenu(this.menuList)}
-        </a-menu>
-      </div>
+      <a-menu
+        inlineCollapsed={ this.collapsed }
+        v-model={this.selectedKeys}
+        theme={this.theme}
+        mode="inline"
+        on-click={this.handleSelect}
+        on-openChange={this.openChange}
+        openKeys={this.openKeys}
+      >
+        {this.renderMenu(this.menuList)}
+      </a-menu>
     );
   }
 
@@ -57,7 +56,7 @@ class Aside extends Vue {
       return (
         <a-menu-item key={item.path}>
           {item.meta && item.meta.icon && <a-icon type={item.meta.icon} />}
-          {item.meta && item.meta.title}
+         <span> {item.meta && item.meta.title}</span>
         </a-menu-item>
       );
     });

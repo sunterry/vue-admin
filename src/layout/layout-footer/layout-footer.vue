@@ -1,6 +1,7 @@
 <template>
   <a-layout-footer class="web-footer">
-    {{message}}
+    {{ message }}
+    <slot></slot>
   </a-layout-footer>
 </template>
 
