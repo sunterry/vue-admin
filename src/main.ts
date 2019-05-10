@@ -3,7 +3,6 @@ import App from './App';
 import router from './router';
 import store from './store';
 import webAdmin from '@/plugins';
-import { authLogin } from '@/api/user';
 
 Vue.use(webAdmin);
 Vue.config.productionTip = false;
@@ -13,9 +12,8 @@ new Vue({
   store,
   render: (h) => h(App),
   async mounted() {
-    const res = await authLogin({ username: 'admin', password: '123' });
-    console.log(res);
     this.$store.commit('releases/getVersion');
     this.$store.commit('ua/get');
+    this.$store.dispatch('fullscreen/listen');
   },
 }).$mount('#app');

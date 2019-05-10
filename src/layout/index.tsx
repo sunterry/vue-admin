@@ -2,6 +2,7 @@ import { Vue, Component } from 'vue-property-decorator';
 import LayoutAside from './layout-aside';
 import LayoutHeader from './layout-header';
 import LayoutFooter from './layout-footer';
+import LayoutTabs from './layout-tabs';
 import config from '@/config';
 import menuList from '@/router/config/menu/aside';
 import '@/assets/styles/layout.less';
@@ -13,6 +14,7 @@ import { IRouteItem } from '@/interface/routes';
     LayoutHeader,
     LayoutAside,
     LayoutFooter,
+    LayoutTabs,
   },
 })
 class Dashboard extends Vue {
@@ -40,6 +42,7 @@ class Dashboard extends Vue {
             />
           </a-layout-sider>
           <a-layout-content>
+            <layout-tabs />
             <keep-alive>
               <router-view />
             </keep-alive>

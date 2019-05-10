@@ -10,6 +10,23 @@ const asideMenu: IRouteItem[] = [
     },
   },
   {
+    path: '/aa',
+    name: 'demo',
+    meta: {
+      title: 'a',
+      icon: 'folder-o',
+    },
+    children: [
+      {
+        path: 'c',
+        name: 'Page1',
+        meta: {
+          title: '页面 1',
+        },
+      },
+    ],
+  },
+  {
     path: '/demo',
     name: 'demo',
     meta: {

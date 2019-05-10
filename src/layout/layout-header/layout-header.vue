@@ -1,50 +1,39 @@
 <template>
-  <a-layout-header class="web-header">
-    <layout-logo />
-    <div class="web-header-content">
-      <a-button type="primary" @click="toggleCollapsed" style="margin-bottom: 16px">
+  <a-layout-header class="web-header" flex>
+    <layout-logo flex-box="0" class="web-logo"></layout-logo>
+    <section flex-box="1" flex>
+      <a-button flex-box="0" type="primary" @click="toggleCollapsed" class="web-mb web-mt">
         <a-icon :type="isCollapsed" />
       </a-button>
-      <div class="web-header-menu">
-        <a-menu
-          v-model="current"
-          mode="horizontal"
-        >
-          <a-menu-item key="mail">
-            <a-icon type="mail" />Navigation One
-          </a-menu-item>
-          <a-menu-item key="app" disabled>
-            <a-icon type="appstore" />Navigation Two
-          </a-menu-item>
-          <a-sub-menu>
-            <span slot="title" class="submenu-title-wrapper"><a-icon type="setting" />Navigation Three - Submenu</span>
-            <a-menu-item-group title="Item 1">
-              <a-menu-item key="setting:1">Option 1</a-menu-item>
-              <a-menu-item key="setting:2">Option 2</a-menu-item>
-            </a-menu-item-group>
-            <a-menu-item-group title="Item 2">
-              <a-menu-item key="setting:3">Option 3</a-menu-item>
-              <a-menu-item key="setting:4">Option 4</a-menu-item>
-            </a-menu-item-group>
-          </a-sub-menu>
-        </a-menu>
+      <div flex-box="1"></div>
+      <div flex-box="1" flex>
+        <header-screen flex-box="0" />
+        <header-user
+          flex-box="0"
+          :trigger="['click']"
+          @on-ok="handleOk"
+          @on-cancel="handleCancel"
+        ></header-user>
       </div>
-    </div>
+    </section>
   </a-layout-header>
 </template>
 
 <script lang="ts">
 import { Vue, Component, Prop, Emit } from 'vue-property-decorator';
 import LayoutLogo from '../layout-logo';
+import HeaderUser from '../header-user';
+import HeaderScreen from '../header-screen';
 
 @Component({
   name: 'LayoutHeader',
   components: {
     LayoutLogo,
+    HeaderUser,
+    HeaderScreen,
   },
 })
 class LayoutHeader extends Vue {
-
   get isCollapsed() {
     return this.collapsed ? 'menu-unfold' : 'menu-fold';
   }
@@ -55,6 +44,18 @@ class LayoutHeader extends Vue {
   private toggleCollapsed() {
     return !this.collapsed;
   }
+  private handleCancel() {
+    // hanleCancel
+  }
+  private handleOk() {
+    // handleOk
+  }
 }
 export default LayoutHeader;
 </script>
+
+<style lang="less" scoped>
+.web-logo {
+  width: 220px;
+}
+</style>

@@ -24,15 +24,13 @@ const actions: ActionTree<IScreenFull, any> = {
       });
   },
   toggleScreen(context: { commit: Commit }) {
-    return new Promise((resolve) => {
-      if (screenFull.isFullscreen) {
-        screenFull.exit();
-        context.commit(SETSCREEN, false);
-      } else {
-        screenFull.request();
-        context.commit(SETSCREEN, false);
-      }
-    });
+    if (screenFull.isFullscreen) {
+      screenFull.exit();
+      context.commit(SETSCREEN, false);
+    } else {
+      screenFull.request();
+      context.commit(SETSCREEN, true);
+    }
   },
 };
 

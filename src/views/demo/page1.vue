@@ -1,7 +1,7 @@
 <template>
   <div>
-    Page1
- </div>
+    123
+  </div>
 </template>
 
 <script>

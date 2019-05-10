@@ -1,6 +1,8 @@
 import Antd from 'ant-design-vue';
 import 'ant-design-vue/dist/antd.css';
 import '@/assets/styles/antd-variables.less';
+// flex 布局库
+import 'flex.css';
 
 interface IPlugins {
   use: (arg0: typeof Antd) => void;
